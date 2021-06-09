@@ -18,5 +18,10 @@ int main()
     dog->print();
     printf("------------------------------------------\n");
 
+    // Some memory cleanup
+    Block_release(person->print);
+    Block_release(car->print);
+    Block_release(dog->print);
+
     return 0;
 }

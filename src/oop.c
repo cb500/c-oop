@@ -12,11 +12,11 @@ char *copy_char(const char *val)
     return ret;
 }
 
-object_t *new_obj(void *data, void (* print_callback)(const void *))
+object_t *new_obj(void *dataPtr, void (* print_callback)(const void *))
 {
     object_t *obj = (object_t *)calloc(1, sizeof(object_t));
-    obj->data = data;
-    obj->print = print_factory(obj, print_callback);
+    obj->_dataPtr = dataPtr;
+    obj->print = print_factory(obj->_dataPtr, print_callback);
     return obj;
 }
 
@@ -28,7 +28,8 @@ object_t *new_person(char *name, char gender, int age)
     person->gender = gender;
     person->age = age;
 
-    return new_obj(person, print_person);
+    person->parent = new_obj(person, print_person);
+    return person->parent;
 }
 
 object_t *new_car(char *name, char *color, char *brand, double value)
@@ -40,7 +41,8 @@ object_t *new_car(char *name, char *color, char *brand, double value)
     car->brand = copy_char(brand);
     car->value = value;
 
-    return new_obj(car, print_car);
+    car->parent = new_obj(car, print_car);
+    return car->parent;
 }
 
 object_t *new_animal(char *type, char *color, int weight)
@@ -51,24 +53,25 @@ object_t *new_animal(char *type, char *color, int weight)
     animal->color = copy_char(color);
     animal->weight = weight;
 
-    return new_obj(animal, print_animal);
+    animal->parent = new_obj(animal, print_animal);
+    return animal->parent;
 }
 
 void print_person(const void *person)
 {
-    person_t *data = ((object_t *)person)->data;
+    person_t *data = (person_t *)person;
     printf("Name: %s\nGender: %c\nAge: %d\n", data->name, data->gender, data->gender);
 }
 
 void print_car(const void *car)
 {
-    car_t *data = ((object_t *)car)->data;
+    car_t *data = (car_t *)car;
     printf("Name: %s\nColor: %s\nBrand: %s\nValue: $%0.2f\n", data->name, data->color, data->brand, data->value);
 }
 
 void print_animal(const void *animal)
 {
-    animal_t *data = ((object_t *)animal)->data;
+    animal_t *data = (animal_t *)animal;
     printf("Type: %s\nColor: %s\nWeight: %d\n", data->type, data->color, data->weight);
 }
 

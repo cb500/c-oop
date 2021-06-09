@@ -14,13 +14,13 @@ typedef struct _OBJECT object_t;
 struct _OBJECT
 {
     dispatch_block_t print;
-    void *data;
+    void *_dataPtr;
 };
 
 typedef struct  _PERSON person_t;
 struct  _PERSON
 {
-//    void (* print)();
+    object_t *parent;
     char *name;
     char gender;
     int age;
@@ -29,7 +29,7 @@ struct  _PERSON
 typedef struct  _CAR car_t;
 struct  _CAR
 {
-//    void (* print)();
+    object_t *parent;
     char *name;
     char *color;
     char *brand;
@@ -39,7 +39,7 @@ struct  _CAR
 typedef struct  _ANIMAL animal_t;
 struct  _ANIMAL 
 {
-//    void (* print)();
+    object_t *parent;
     char *type;
     char *color;
     int weight;
