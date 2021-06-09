@@ -15,8 +15,8 @@ BUILD_DIR 	= build
 
 
 # CC flags and libs
-CFLAG_BLOCKS  = -fblocks
-CFLAGS 		  = -fPIC -Wall -Wextra -g -O0 -I$(INC_DIR) $(CFLAG_BLOCKS) -I/usr/include/block
+CFLAG_BLOCKS  = -I/usr/include/block -fblocks
+CFLAGS 		  = -fPIC -Wall -Wextra -g -O0 -I$(INC_DIR) $(CFLAG_BLOCKS)
 LDFLAGS 	  = -lBlocksRuntime -ldispatch
 LIBS   		  =
 
