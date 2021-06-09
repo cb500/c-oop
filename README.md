@@ -24,11 +24,11 @@ struct  person_t
 // Parent constructor
 // Here the constructor receives a pointer to the child
 // It also "overloads" with the appropriated "print" method from each child object
-object_t *new_obj(void *child, void (* print_callback)(const void *))
+object_t *new_obj(void *child, void (*print_callback)(const void *))
 {
     object_t *parent = (object_t *)calloc(1, sizeof(object_t));
     parent->child = child;
-    parent->print = print_factory(parent->_dataPtr, print_callback);
+    parent->print = print_factory(parent, print_callback);
     return parent;
 }
 
@@ -37,7 +37,7 @@ object_t *new_obj(void *child, void (* print_callback)(const void *))
 //      which is not the correct approach either
 object_t *new_person(char *name, char gender, int age)
 {
-    person_t *child = (person_t *)cmalloc(1, sizeof(person_t));
+    person_t *child = (person_t *)calloc(1, sizeof(person_t));
     child->name = copy_char(name);
     child->gender = gender;
     child->age = age;
@@ -63,7 +63,7 @@ struct  person_t
     int age;
 };
 
-object_t *new_obj(void *data, void (* print_callback)(const void *))
+object_t *new_obj(void *data, void (*print_callback)(const void *))
 {
     object_t *parent = (object_t *)calloc(1, sizeof(object_t));
     parent->print = print_factory(data, print_callback);
