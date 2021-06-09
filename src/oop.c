@@ -63,7 +63,7 @@ void print_person(const void *person)
 void print_car(const void *car)
 {
     car_t *data = ((object_t *)car)->data;
-    printf("Name: %s\nColor: %s\nBrand: %s\nValue %f\n", data->name, data->color, data->brand, data->value);
+    printf("Name: %s\nColor: %s\nBrand: %s\nValue: $%0.2f\n", data->name, data->color, data->brand, data->value);
 }
 
 void print_animal(const void *animal)

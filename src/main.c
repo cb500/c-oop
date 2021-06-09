@@ -7,7 +7,7 @@
 int main()
 {
     object_t *person = NEW(person, "Maria Joaquina", 'F', 32);
-    object_t *car = NEW(car, "Gol", "Red", "Volkswagen", 25000.00);
+    object_t *car = NEW(car, "Panamera", "Yellow", "Porsche", 125000.00);
     object_t *dog = NEW(animal, "Dog", "Black", 7);
 
     printf("------------------------------------------\n");
