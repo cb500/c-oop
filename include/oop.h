@@ -14,7 +14,6 @@ typedef struct _OBJECT object_t;
 struct _OBJECT
 {
     dispatch_block_t print;
-    void *_dataPtr;
 };
 
 typedef struct  _PERSON person_t;

@@ -12,23 +12,22 @@ char *copy_char(const char *val)
     return ret;
 }
 
-object_t *new_obj(void *dataPtr, void (* print_callback)(const void *))
+object_t *new_obj(void *data, void (* print_callback)(const void *))
 {
     object_t *obj = (object_t *)calloc(1, sizeof(object_t));
-    obj->_dataPtr = dataPtr;
-    obj->print = print_factory(obj->_dataPtr, print_callback);
+    obj->print = print_factory(data, print_callback);
     return obj;
 }
 
 object_t *new_person(char *name, char gender, int age)
 {
-    person_t *person = (person_t *)malloc(sizeof(person_t));
-    memset(person, 0, sizeof(person_t));
+    person_t *person = (person_t *)calloc(1, sizeof(person_t));
+    // memset(person, 0, sizeof(person_t));
+    person->parent = new_obj(person, print_person);
     person->name = copy_char(name);
     person->gender = gender;
     person->age = age;
 
-    person->parent = new_obj(person, print_person);
     return person->parent;
 }
 
