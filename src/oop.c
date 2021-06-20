@@ -22,7 +22,6 @@ object_t *new_obj(void *data, void (* print_callback)(const void *))
 object_t *new_person(char *name, char gender, int age)
 {
     person_t *person = (person_t *)calloc(1, sizeof(person_t));
-    // memset(person, 0, sizeof(person_t));
     person->parent = new_obj(person, print_person);
     person->name = copy_char(name);
     person->gender = gender;

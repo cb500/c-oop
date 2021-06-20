@@ -1,9 +1,10 @@
 # -*- Makefile -*-
 
 # CC    = gcc
-CC    = clang
-MKDIR = mkdir -p
+CC    	 = clang
+MKDIR 	 = mkdir -p
 VALGRIND = valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all
+DOCKER	 = $(shell which docker) run -v $(shell pwd):/workspace -it cb500/dev:ubuntu
 
 # Binary name
 BIN  	 = oop
@@ -12,7 +13,6 @@ BIN  	 = oop
 SRC_DIR	  	= src
 INC_DIR   	= ./include
 BUILD_DIR 	= build
-
 
 # CC flags and libs
 CFLAG_BLOCKS  = -I/usr/include/block -fblocks
@@ -26,10 +26,13 @@ OBJ_FILES = $(addprefix $(BUILD_DIR)/,$(patsubst %.c,%.o,$(notdir $(SRC_FILES)))
 
 SILENT := 
 
-.PHONY: build test valgrind clean
+.PHONY: build docker test valgrind clean
 
 build: directories $(BIN)
 	@echo "Done, enjoy your binary files :D"
+
+docker:
+	$(DOCKER) sh -c "cd /workspace && make "
 
 directories:
 	@echo "Creating directories $(BUILD_DIR)"
