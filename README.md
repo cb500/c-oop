@@ -94,7 +94,7 @@ make run
 
 The Makefile uses the linux `pwd` to get the current directory and mounts it as a volume inside the docker container it creates and the result should be something like:
 ```bash
-cd /workspace/oop
+cb500@dev:~$ cd /workspace/oop
 
 cb500@dev:/projects/cb500/oop$ make docker
 /usr/bin/docker run --rm -v /projects/cb500/oop:/workspace -it cb500/clang sh -c "cd /workspace && make "
