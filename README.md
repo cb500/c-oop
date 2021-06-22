@@ -85,6 +85,47 @@ The child constructor is still returning the parent object, which is wrong, but 
 
 The next step is to make the child return the correct object, create some grandchildren to test the inheritance propagation and start fixing the delegation of responsibilities, for example, in the above code the parent's constructor still receive a child's reference to correctly build the "print" method. It's not the parent's responsibility but the child's one. The parent may have its own "print" method but if the child wants to specialize it it has to overload the method.
 
+## Run and compile
+I've created a docker image with all dependencies to compile and run this project: `cb500/clang`. I've also added the compilation and execution steps to the Makefile and compile and run the project is as easy as:
+```bash
+make docker
+make run
+```
+
+The Makefile uses the linux `pwd` to get the current directory and mounts it as a volume inside the docker container it creates and the result should be something like:
+```bash
+cd /workspace/oop
+
+cb500@dev:/projects/cb500/oop$ make docker
+/usr/bin/docker run --rm -v /projects/cb500/oop:/workspace -it cb500/clang sh -c "cd /workspace && make "
+Creating directories build
+mkdir -p build
+Compiling project file 'src/main.c' to create 'build/build/main.o'
+clang -c -o build/main.o src/main.c -fPIC -Wall -Wextra -g -O0 -I./include -I/usr/include/block -fblocks
+Compiling project file 'src/oop.c' to create 'build/build/oop.o'
+clang -c -o build/oop.o src/oop.c -fPIC -Wall -Wextra -g -O0 -I./include -I/usr/include/block -fblocks
+Linking the object files (build/main.o build/oop.o) to build 'build/oop' executable file
+clang -o build/oop build/main.o build/oop.o -fPIC -Wall -Wextra -g -O0 -I./include -I/usr/include/block -fblocks  -lBlocksRuntime -ldispatch
+Done, enjoy your binary files :D
+
+cb500@dev:/projects/cb500/oop$ make run
+/usr/bin/docker run --rm -v /projects/cb500/oop:/workspace -it cb500/clang sh -c "/workspace/build/oop"	
+------------------------------------------
+Name: Maria Joaquina
+Gender: F
+Age: 70
+------------------------------------------
+Name: Panamera
+Color: Yellow
+Brand: Porsche
+Value: $125000.00
+------------------------------------------
+Type: Dog
+Color: Black
+Weight: 7
+------------------------------------------
+```
+
 ## Dependencies
 I use *Block Type*[1] here, so this project depends on:
 - clang >= 12 (It may work with older version but was tested with clang version 12.0.0 on OpenSuse)

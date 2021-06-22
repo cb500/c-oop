@@ -4,7 +4,7 @@
 CC    	 = clang
 MKDIR 	 = mkdir -p
 VALGRIND = valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all
-DOCKER	 = $(shell which docker) run -v $(shell pwd):/workspace -it cb500/dev:ubuntu
+DOCKER	 = $(shell which docker) run --rm -v $(shell pwd):/workspace -it cb500/clang
 
 # Binary name
 BIN  	 = oop
@@ -34,13 +34,16 @@ build: directories $(BIN)
 docker:
 	$(DOCKER) sh -c "cd /workspace && make "
 
+run:
+	$(DOCKER) sh -c "/workspace/build/oop"	
+
 directories:
 	@echo "Creating directories $(BUILD_DIR)"
 	$(SILENT) $(MKDIR) $(BUILD_DIR)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo "Compiling project file '$<' to create '$(BUILD_DIR)/$@'"
-	$(SILENT) $(CC) -c -o $@ $< $(CFLAGS) $(LDFLAGS)
+	$(SILENT) $(CC) -c -o $@ $< $(CFLAGS)
 
 $(BIN): $(OBJ_FILES)
 	@echo "Linking the object files ($^) to build '$(BUILD_DIR)/$@' executable file"
